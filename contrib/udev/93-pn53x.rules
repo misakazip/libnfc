@@ -19,4 +19,7 @@ ATTRS{idVendor}=="054c", ATTRS{idProduct}=="02e1", MODE="0664", GROUP="plugdev"
 ATTRS{idVendor}=="072f", ATTRS{idProduct}=="2200", MODE="0664", GROUP="plugdev"
 ATTRS{idVendor}=="072f", ATTRS{idProduct}=="90cc", MODE="0664", GROUP="plugdev"
 
+# Sony RC-S380
+ATTRS{idVendor}=="054c", ATTRS{idProduct}=="06c3", MODE="0664", GROUP="plugdev"
+
 LABEL="pn53x_rules_end"

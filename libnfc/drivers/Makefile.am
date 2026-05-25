@@ -48,6 +48,10 @@ libnfcdrivers_la_LIBADD += @LIBNFC_NCI_LIBS@
 libnfcdrivers_la_SOURCES += pn71xx.c pn71xx.h
 endif
 
+if DRIVER_RCS380_ENABLED
+libnfcdrivers_la_SOURCES += rcs380.c rcs380.h
+endif
+
 if PCSC_ENABLED
   libnfcdrivers_la_CFLAGS += @libpcsclite_CFLAGS@
   libnfcdrivers_la_LIBADD += @libpcsclite_LIBS@

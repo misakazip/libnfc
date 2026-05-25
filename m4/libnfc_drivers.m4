@@ -4,7 +4,7 @@ AC_DEFUN([LIBNFC_ARG_WITH_DRIVERS],
 [
   AC_MSG_CHECKING(which drivers to build)
   AC_ARG_WITH(drivers,
-  AS_HELP_STRING([--with-drivers=DRIVERS], [Use a custom driver set, where DRIVERS is a coma-separated list of drivers to build support for. Available drivers are: 'acr122_pcsc', 'acr122_usb', 'acr122s', 'arygon', 'pcsc', 'pn532_i2c', 'pn532_spi', 'pn532_uart', 'pn53x_usb' and 'pn71xx'. Default drivers set is 'acr122_usb,acr122s,arygon,pn532_i2c,pn532_spi,pn532_uart,pn53x_usb'. The special driver set 'all' compile all available drivers.]),
+  AS_HELP_STRING([--with-drivers=DRIVERS], [Use a custom driver set, where DRIVERS is a coma-separated list of drivers to build support for. Available drivers are: 'acr122_pcsc', 'acr122_usb', 'acr122s', 'arygon', 'pcsc', 'pn532_i2c', 'pn532_spi', 'pn532_uart', 'pn53x_usb', 'pn71xx' and 'rcs380'. Default drivers set is 'acr122_usb,acr122s,arygon,pn532_i2c,pn532_spi,pn532_uart,pn53x_usb,rcs380'. The special driver set 'all' compile all available drivers.]),
 
   [       case "${withval}" in
           yes | no)
@@ -26,7 +26,7 @@ AC_DEFUN([LIBNFC_ARG_WITH_DRIVERS],
 
   case "${DRIVER_BUILD_LIST}" in
     default)
-                  DRIVER_BUILD_LIST="acr122_usb acr122s arygon pn53x_usb pn532_uart"
+                  DRIVER_BUILD_LIST="acr122_usb acr122s arygon pn53x_usb pn532_uart rcs380"
                   if test x"$spi_available" = x"yes"
                   then
                       DRIVER_BUILD_LIST="$DRIVER_BUILD_LIST pn532_spi"
@@ -37,7 +37,7 @@ AC_DEFUN([LIBNFC_ARG_WITH_DRIVERS],
                   fi
                   ;;
     all)
-                  DRIVER_BUILD_LIST="acr122_pcsc acr122_usb acr122s arygon pn53x_usb pn532_uart pcsc"
+                  DRIVER_BUILD_LIST="acr122_pcsc acr122_usb acr122s arygon pn53x_usb pn532_uart pcsc rcs380"
 
                   if test x"$spi_available" = x"yes"
                   then
@@ -66,6 +66,7 @@ AC_DEFUN([LIBNFC_ARG_WITH_DRIVERS],
   driver_pn532_spi_enabled="no"
   driver_pn532_i2c_enabled="no"
   driver_pn71xx_enabled="no"
+  driver_rcs380_enabled="no"
 
   for driver in ${DRIVER_BUILD_LIST}
   do
@@ -120,6 +121,11 @@ AC_DEFUN([LIBNFC_ARG_WITH_DRIVERS],
                   driver_pn71xx_enabled="yes"
                   DRIVERS_CFLAGS="$DRIVERS_CFLAGS -DDRIVER_PN71XX_ENABLED"
                   ;;
+    rcs380)
+                  libusb_required="yes"
+                  driver_rcs380_enabled="yes"
+                  DRIVERS_CFLAGS="$DRIVERS_CFLAGS -DDRIVER_RCS380_ENABLED"
+                  ;;
     *)
                   AC_MSG_ERROR([Unknow driver: $driver])
                   ;;
@@ -136,6 +142,7 @@ AC_DEFUN([LIBNFC_ARG_WITH_DRIVERS],
   AM_CONDITIONAL(DRIVER_PN532_SPI_ENABLED, [test x"$driver_pn532_spi_enabled" = xyes])
   AM_CONDITIONAL(DRIVER_PN532_I2C_ENABLED, [test x"$driver_pn532_i2c_enabled" = xyes])
   AM_CONDITIONAL(DRIVER_PN71XX_ENABLED, [test x"$driver_pn71xx_enabled" = xyes])
+  AM_CONDITIONAL(DRIVER_RCS380_ENABLED, [test x"$driver_rcs380_enabled" = xyes])
 ])
 
 AC_DEFUN([LIBNFC_DRIVERS_SUMMARY],[
@@ -151,4 +158,5 @@ echo "   pn532_uart....... $driver_pn532_uart_enabled"
 echo "   pn532_spi.......  $driver_pn532_spi_enabled"
 echo "   pn532_i2c........ $driver_pn532_i2c_enabled"
 echo "   pn71xx........... $driver_pn71xx_enabled"
+echo "   rcs380........... $driver_rcs380_enabled"
 ])

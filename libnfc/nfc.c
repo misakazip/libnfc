@@ -128,6 +128,10 @@
 #  include "drivers/pn71xx.h"
 #endif /* DRIVER_PN71XX_ENABLED */
 
+#if defined (DRIVER_RCS380_ENABLED)
+#  include "drivers/rcs380.h"
+#endif /* DRIVER_RCS380_ENABLED */
+
 
 #define LOG_CATEGORY "libnfc.general"
 #define LOG_GROUP    NFC_LOG_GROUP_GENERAL
@@ -191,6 +195,9 @@ nfc_drivers_init(void)
 #if defined (DRIVER_PN71XX_ENABLED)
   nfc_register_driver(&pn71xx_driver);
 #endif /* DRIVER_PN71XX_ENABLED */
+#if defined (DRIVER_RCS380_ENABLED)
+  nfc_register_driver(&rcs380_driver);
+#endif /* DRIVER_RCS380_ENABLED */
 }
 
 static int
